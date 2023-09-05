@@ -4,8 +4,9 @@ export default createStore({
         return{
             fishes:null,
             fishesFiltered:null,
-            searchTerm:null,
+            searchTerm:'',
             appLoaded:false,
+            mode:'all'
         }
     }
 })

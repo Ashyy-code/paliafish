@@ -5,7 +5,14 @@
   </div>
   
   <div class="searcher">
-    <input id="inpsearch" type="text" placeholder="Start typing a fish name, zone, rarity, time or bait" v-model="this.$store.state.searchTerm" @keyup="filterFish()"/>
+    <div class="search-box">
+      <input id="inpsearch" type="text" placeholder="Start typing a fish name, zone, rarity, time or bait" v-model="this.$store.state.searchTerm" @keyup="filterFish()"/>
+    </div>
+    <div class="checker">
+      <button :selected="this.$store.state.mode == 'all'" @click="this.$store.state.mode = 'all'; filterFish()">Show All</button>
+      <button :selected="this.$store.state.mode == 'checked'" @click="this.$store.state.mode = 'checked'; filterFish()">Show Checked</button>
+      <button :selected="this.$store.state.mode == 'unchecked'" @click="this.$store.state.mode = 'unchecked'; filterFish()">Show Unchecked</button>
+    </div>
   </div>
 
   <div v-if="!this.$store.state.appLoaded" class="wrapper loader">
@@ -81,6 +88,13 @@ methods:{
         pushFish = true;
       }
 
+      if(this.$store.state.mode == 'checked' && fish.checked == false){
+        pushFish = false;
+      }
+
+      if(this.$store.state.mode == 'unchecked' && fish.checked == true){
+        pushFish = false;
+      }
 
 
       if(pushFish){this.$store.state.filterFish.push(fish);}
@@ -130,12 +144,16 @@ methods:{
     border-radius: 1rem;
     display:flex;
     flex-direction: column;
-    min-width:400px;
+    width:400px;
     border:solid 5px #10234d;
     overflow: hidden;
     gap:.5rem;
     user-select: none;
     cursor: pointer;
+
+    @media screen and (max-width:600px) {
+      width:100%;
+    }
 
     &[checked="true"]{
       border-color:#3aa948;
@@ -214,10 +232,53 @@ methods:{
   justify-content: center;
   align-items: center;
   padding:2rem;
-  width:100%;
+  flex-direction: column;
+
+  @media screen and (max-width:600px) {
+      
+    }
+
+
+    .search-box{
+      width:100%;
+      display:flex;
+      justify-content: center;
+    }
+
+  .checker{
+    display:flex;
+    justify-content: center;
+    padding:1rem;
+    gap:.5rem;
+
+    button{
+      padding:.5rem;
+      font-size:100%;
+      border:0;
+      border-radius: .5rem;
+      cursor: pointer;
+
+   
+
+      &[selected="true"]{
+        background:#e58129;
+        color:white;
+      }
+
+      &[selected="false"]{
+        background:#0000008f;
+        color:white;
+      }
+
+      &:hover{
+        outline:solid 3px #f7b901;
+        color:white;
+      }
+    }
+  }
 
   input{
-    width:100%;
+    width:100vw;
     max-width: 600px;
     font-size: 120%;
     padding:1rem;
@@ -226,6 +287,12 @@ methods:{
     border-radius: 1rem;
     outline:none;
     border:solid 5px #eef2fbe8;
+    margin:0 auto;
+
+    @media screen and (max-width:600px) {
+      width:calc(100% - 2rem);
+      max-width: unset;
+    }
   }
 }
 .logo{
@@ -239,7 +306,9 @@ methods:{
   
   
   img{
-    margin-left:2rem;
+    @media screen and (max-width:600px) {
+      width:100%;
+    }
   }
   }
 </style>
