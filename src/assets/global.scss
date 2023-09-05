@@ -11,7 +11,8 @@
 body,html,#app{
     margin:0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background:#6b7da9;
+    background:url(../assets/bg.png);
+    background-size: cover;
     font-size:1.1rem;
     overflow-x: hidden ;
     height:100vh;

@@ -5,6 +5,7 @@ export default createStore({
             fishes:null,
             fishesFiltered:null,
             searchTerm:null,
+            appLoaded:false,
         }
     }
 })

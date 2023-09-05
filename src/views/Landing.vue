@@ -1,14 +1,18 @@
 <template>
 
   <div class="logo">
-    Ashy's Palia Fish Search
+    <img src="../assets/logo.png" />
   </div>
   
   <div class="searcher">
-    <input type="text" placeholder="Start typing a fish name, zone, rarity, time or bait" v-model="this.$store.state.searchTerm" @keyup="filterFish()"/>
+    <input id="inpsearch" type="text" placeholder="Start typing a fish name, zone, rarity, time or bait" v-model="this.$store.state.searchTerm" @keyup="filterFish()"/>
   </div>
 
-  <div class="wrapper">
+  <div v-if="!this.$store.state.appLoaded" class="wrapper loader">
+    Loading Fishes one sec..
+  </div>
+
+  <div v-if="this.$store.state.appLoaded" class="wrapper">
 
     <div 
     v-for="fish in $store.state.filterFish" 
@@ -42,6 +46,7 @@ import { pushScopeId } from 'vue';
 export default {
 mounted(){
   this.loadFishes();
+  document.querySelector('#inpsearch').focus();
 },
 methods:{
   async loadFishes(){
@@ -50,6 +55,7 @@ methods:{
     }).then(response =>{
       this.$store.state.fishes = JSON.parse(response.data.d);
       this.$store.state.filterFish = this.$store.state.fishes;
+      this.$store.state.appLoaded = true;
     })
   },
   filterFish(){
@@ -86,7 +92,7 @@ methods:{
   },
   async selectFish(fish){
     fish.checked = !fish.checked;
-    console.log(this.$store.state.fishes)
+    //console.log(this.$store.state.fishes)
     //sync the fishes
     await axios.post("https://ashypls.com/endpoints/puzzler.asmx/updateFishList",{
       contentType:'application/json',
@@ -102,6 +108,13 @@ methods:{
 </script>
 
 <style lang="scss" scoped>
+
+.loader{
+  display:grid;
+  place-items: center;
+  color:white;
+  font-size:200%;
+}
 .wrapper{
   display:flex;
   flex-direction: row;
@@ -113,7 +126,7 @@ methods:{
   .fish{
 
     position:relative;
-    background:#34405a;
+    background:#34405ae8;
     border-radius: 1rem;
     display:flex;
     flex-direction: column;
@@ -132,7 +145,7 @@ methods:{
     }
 
     &:hover{
-      border-color:#091736
+      border-color:#ffffff66
     }
     
 
@@ -155,7 +168,7 @@ methods:{
     width:100px;
     aspect-ratio: 1;
     object-fit: contain;
-    border:solid 3px #34405a;
+    // border:solid 3px #34405ae8;
     position: absolute;
     left:10px;
     bottom:0;
@@ -212,7 +225,7 @@ methods:{
     color:white;
     border-radius: 1rem;
     outline:none;
-    border:solid 5px #34405a;
+    border:solid 5px #eef2fbe8;
   }
 }
 .logo{
@@ -223,5 +236,10 @@ methods:{
   width:100%;
   font-size:200%;
   color:white;
+  
+  
+  img{
+    margin-left:2rem;
+  }
   }
 </style>
