@@ -45,11 +45,11 @@ mounted(){
 },
 methods:{
   async loadFishes(){
-    await axios.post("https://ashypls.com/endpoints/apis/paliafishes.aspx",{
+    await axios.post("https://ashypls.com/endpoints/puzzler.asmx/createFishList",{
       contentType:'application/json'
     }).then(response =>{
-      this.$store.state.fishes = response.data;
-      this.$store.state.filterFish = response.data;
+      this.$store.state.fishes = JSON.parse(response.data.d);
+      this.$store.state.filterFish = this.$store.state.fishes;
     })
   },
   filterFish(){
@@ -86,6 +86,7 @@ methods:{
   },
   async selectFish(fish){
     fish.checked = !fish.checked;
+    console.log(this.$store.state.fishes)
     //sync the fishes
     await axios.post("https://ashypls.com/endpoints/puzzler.asmx/updateFishList",{
       contentType:'application/json',
