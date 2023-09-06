@@ -57,7 +57,7 @@ mounted(){
 },
 methods:{
   async loadFishes(){
-    await axios.post("https://ashypls.com/endpoints/puzzler.asmx/createFishList",{
+    await axios.post("https://ashypls-001-site1.ftempurl.com/puzzler.asmx/createFishList",{
       contentType:'application/json'
     }).then(response =>{
       this.$store.state.fishes = JSON.parse(response.data.d);
@@ -108,7 +108,7 @@ methods:{
     fish.checked = !fish.checked;
     //console.log(this.$store.state.fishes)
     //sync the fishes
-    await axios.post("https://ashypls.com/endpoints/puzzler.asmx/updateFishList",{
+    await axios.post("https://ashypls-001-site1.ftempurl.com/puzzler.asmx/updateFishList",{
       contentType:'application/json',
       fishes: JSON.stringify(this.$store.state.fishes)
     }).then(
