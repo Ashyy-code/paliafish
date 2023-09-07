@@ -199,6 +199,8 @@ export default {
           if (flagAsComplete == true) {
             const jsConfetti = new JSConfetti();
             jsConfetti.addConfetti();
+            var audio = new Audio('https://ashypls.com/Sounds/woot.mp3');
+            audio.play();
           }
         });
     },
