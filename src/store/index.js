@@ -6,7 +6,8 @@ export default createStore({
             fishesFiltered:null,
             searchTerm:'',
             appLoaded:false,
-            mode:'all'
+            mode:'all',
+            completed:false,
         }
     }
 })
