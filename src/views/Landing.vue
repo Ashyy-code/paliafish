@@ -78,7 +78,7 @@
           >Sold for: <span>{{ fish.fish_gold }}</span></span
         >
         <span
-          >Rarity: <span>{{ fish.fish_rarity }}</span></span
+          >Rarity: <span :style="rarityColor(fish.fish_rarity)">{{ fish.fish_rarity }}</span></span
         >
         <span
           >Time: <span>{{ fish.fish_time }}</span></span
@@ -204,6 +204,14 @@ export default {
           }
         });
     },
+    rarityColor(fishrarity){
+      switch(fishrarity){
+        case "Common" : return "color:#6dff6d";
+        case "Uncommon": return "color:#a1a1a1";
+        case "Rare" : return "color:#55b7ff";
+        case "Epic" : return "color:#ff29ff";
+      }
+    }
   },
 };
 </script>
